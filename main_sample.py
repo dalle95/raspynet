@@ -21,6 +21,15 @@ def start(address, port, topic):
     # Attesa di 1 secondo per la connessione all'MQTT broker
     time.sleep(1)
 
+    # Definizione Messaggio
+    message = "Messaggio 1"
+    # Pubblicazione messaggio
+    mqtt_pub.sendMessage(address, port, topic, message)
+    # Definizione Messaggio
+    message = "Messaggio 2"
+    # Pubblicazione messaggio
+    mqtt_pub.sendMessage(address, port, topic, message)
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
