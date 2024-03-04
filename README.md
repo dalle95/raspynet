@@ -46,6 +46,8 @@ Questo script pubblicherà i dati rilevati dal Raspberry Pi Pico W al topic MQTT
 python raspy_master.py
 ```
 Questo script si sottoscriverà al topic MQTT specificato per ricevere i dati dai Raspberry Pi Pico W e li invierà al database Firebase per l'archiviazione.
+## Esempio
+Per testare il codice usare il file `main_example.py`.
 
 # Contribuire
 Se desideri contribuire a questo progetto, sentiti libero di aprire una richiesta di pull o segnalare eventuali problemi nell'area delle issue.

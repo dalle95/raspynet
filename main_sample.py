@@ -6,10 +6,11 @@ import sys
 
 from decouple import config
 
+import json
+
 from functions import mqtt_sub # Funzione per creare la Subscription
 from functions import mqtt_pub # Funzione per pubblicare i messaggi
-
-import sys
+from functions import storicizza_messaggi
 
 sys.path.insert(0, './functions')  # Aggiungi il percorso della sottodirectory al sys.path
 
@@ -23,6 +24,37 @@ def start(address, port, topic, client_id):
     # Attesa di 1 secondo per la connessione all'MQTT broker
     time.sleep(1)
 
+    # Definizione Messaggio
+    json_message = {
+        "client": "TEST-1",
+        "sensore": "Temperatura",
+        "valore": 20
+    }
+
+    # Serializza il JSON in una stringa
+    message_string = json.dumps(json_message)
+
+    # Pubblicazione messaggio
+    mqtt_pub.sendMessage(address, port, topic, message_string, "test")
+
+    # Definizione Messaggio
+    json_message = {
+        "client": "TEST-2",
+        "sensore": "Umidità",
+        "valore": 20
+    }
+
+    # Serializza il JSON in una stringa
+    message_string = json.dumps(json_message)
+
+    # Pubblicazione messaggio
+    mqtt_pub.sendMessage(address, port, topic, message_string, "test2")
+
+
+# Funzione per gestire i messaggi della subscription
+def estrazione_messaggi(message):
+    storicizza_messaggi.salva(message)
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -31,11 +63,11 @@ if __name__ == '__main__':
     address = config('MQTT_BROKER_ADDRESS', default='192.168.1.15')
     # Lettura variabile ambiente relativa alla porta
     port = config('MQTT_BROKER_PORT', default=1883, cast=int)
-    # Lettura variabile ambiente relativa al client_id
-    client_id = config('MQTT_CLIENT_ID', default="RASPYZERO")
 
     # Definizione Topic
-    topic = "Topic-PICO-1"
+    topic = "PICOS"
+
+    client_id = "RASPY-ZERO"
 
     start(address,port,topic,client_id)
 

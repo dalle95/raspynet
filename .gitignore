@@ -25,3 +25,7 @@ build/
 # IDE specific
 .idea/
 .vscode/
+
+# Data
+data/
+*.txt
