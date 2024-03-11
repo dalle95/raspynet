@@ -6,18 +6,29 @@ import sys
 
 from decouple import config
 
+<<<<<<< HEAD
 import json
 
 from functions import mqtt_sub # Funzione per creare la Subscription
 from functions import mqtt_pub # Funzione per pubblicare i messaggi
 from functions import storicizza_messaggi
+=======
+from functions import mqtt_sub # Funzione per creare la Subscription
+from functions import mqtt_pub # Funzione per pubblicare i messaggi
+>>>>>>> origin/master
 
 sys.path.insert(0, './functions')  # Aggiungi il percorso della sottodirectory al sys.path
 
 
+<<<<<<< HEAD
 def start(address, port, topic, client_id):
     # Impostazione Subscription tramite thread per rendere la funzione asincrona
     creaSubscription = threading.Thread(target=mqtt_sub.setSubscription, args=(address, port, topic, client_id))
+=======
+def start(address, port, topic):
+    # Impostazione Subscription tramite thread per rendere la funzione asincrona
+    creaSubscription = threading.Thread(target=mqtt_sub.setSubscription, args=(address, port, topic))
+>>>>>>> origin/master
 
     # Avvio del thread
     creaSubscription.start()
@@ -25,6 +36,7 @@ def start(address, port, topic, client_id):
     time.sleep(1)
 
     # Definizione Messaggio
+<<<<<<< HEAD
     json_message = {
         "client": "TEST-1",
         "sensore": "Temperatura",
@@ -54,6 +66,15 @@ def start(address, port, topic, client_id):
 # Funzione per gestire i messaggi della subscription
 def estrazione_messaggi(message):
     storicizza_messaggi.salva(message)
+=======
+    message = "Messaggio 1"
+    # Pubblicazione messaggio
+    mqtt_pub.sendMessage(address, port, topic, message)
+    # Definizione Messaggio
+    message = "Messaggio 2"
+    # Pubblicazione messaggio
+    mqtt_pub.sendMessage(address, port, topic, message)
+>>>>>>> origin/master
 
 
 # Press the green button in the gutter to run the script.
@@ -65,9 +86,15 @@ if __name__ == '__main__':
     port = config('MQTT_BROKER_PORT', default=1883, cast=int)
 
     # Definizione Topic
+<<<<<<< HEAD
     topic = "PICOS"
 
     client_id = "RASPY-ZERO"
 
     start(address,port,topic,client_id)
+=======
+    topic = "test_topic"
+
+    start(address,port,topic)
+>>>>>>> origin/master
 

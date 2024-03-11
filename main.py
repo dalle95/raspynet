@@ -1,41 +1,16 @@
+# This is a sample Python script.
+
 # Press Maiusc+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import time
-import threading
-import sys
-
-from decouple import config
-
-from functions import mqtt_sub # Funzione per creare la Subscription
-from functions import mqtt_pub # Funzione per pubblicare i messaggi
-
-import sys
-
-sys.path.insert(0, './functions')  # Aggiungi il percorso della sottodirectory al sys.path
 
 
-def start(address, port, topic, client_id):
-    # Impostazione Subscription tramite thread per rendere la funzione asincrona
-    creaSubscription = threading.Thread(target=mqtt_sub.setSubscription, args=(address, port, topic, client_id))
-
-    # Avvio del thread
-    creaSubscription.start()
-    # Attesa di 1 secondo per la connessione all'MQTT broker
-    time.sleep(1)
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    print_hi('PyCharm')
 
-    # Lettura variabile ambiente relativa all'indirizzo del RaspyMaster
-    address = config('MQTT_BROKER_ADDRESS', default='192.168.1.15')
-    # Lettura variabile ambiente relativa alla porta
-    port = config('MQTT_BROKER_PORT', default=1883, cast=int)
-    # Lettura variabile ambiente relativa al client_id
-    client_id = config('MQTT_CLIENT_ID', default="RASPYZERO")
-
-    # Definizione Topic
-    topic = "Topic-PICO-1"
-
-    start(address,port,topic,client_id)
-
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
