@@ -10,18 +10,31 @@ def on_connect(client, userdata, flags, rc):
     print("Risultato di connessione:  "+str(rc))
 
 
-client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION1)
-client.on_connect = on_connect
-
-try:
-    if client.connect(broker_address, port, 60) != 0:
-        raise Exception("Connessione all'MQTT broker non riuscita")
-
-    client.publish("test_topic", "Ciao da connessione MQTT!", 0)
-    client.disconnect()
-
-except Exception as e:
-    print(f"Errore: {e}")
-    sys.exit(1)
+def message_handling(client, userdata, msg):
+    print(f"Topic: {msg.topic} | Messaggio: {msg.payload.decode()}")
 
 
+# Funzione per pubblicare un messaggio su una Subscription
+def send_message(broker_address, port, topic, message, client_id):
+    print("Funzione: sendMessage")
+
+    client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION1, client_id=client_id)
+    client.on_connect = on_connect
+
+    # Connessione all'MQTT broker
+    try:
+        if client.connect(broker_address, port, 60) != 0:
+            raise Exception("Connessione all'MQTT broker non riuscita")
+
+        # Pubblicazione messaggio nel Topic scelto e disconnessione
+        client.publish(topic, message, 0)
+        client.disconnect()
+
+    # Gestione errore di connessione
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+    finally:
+        print("Disconnessione dall'MQTT broker")
+        client.disconnect()
